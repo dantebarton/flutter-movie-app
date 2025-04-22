@@ -1,19 +1,21 @@
 import 'dart:convert';
-
-import 'package:ghibli_info_app/album.dart';
 import 'package:http/http.dart' as http;
+import 'package:ghibli_info_app/album.dart';
 
-class FilmsAPI {
-  static Future<List<Album>> fetchAlbum() async{
-    const url = 'https://ghibliapi.vercel.app/films/';
-    final uri = Uri.parse(url);
+class GhibliService {
+  static const String _baseUrl = 'https://ghibliapi.vercel.app/films/';
+
+  // Function to fetch films from the API
+  static Future<List<Album>> fetchFilms() async {
+    final uri = Uri.parse(_baseUrl);
     final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
-    final films = json['films'] as List<dynamic>;
-    final album = films.map((e) {
-        return Album.fromMap(e);
-    }).toList();
-    return album;
+
+    if (response.statusCode == 200) {
+      final body = response.body;
+      final List<dynamic> json = jsonDecode(body);
+      return json.map((e) => Album.fromMap(e)).toList();
+    } else {
+      throw Exception("Failed to fetch films. Status code: ${response.statusCode}");
+    }
   }
 }

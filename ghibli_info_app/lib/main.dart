@@ -61,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                     crossAxisSpacing: 10,
-                    mainAxisSpacing: 10),
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.7),
                 itemCount: films.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
@@ -70,13 +71,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => DetailPage(
-                            image: films[index].image,
-                            title: films[index].originalTitle,
+                            album: films[index],
                           ),
                         ),
                       );
                     },
                     child: Container(
+                      width: 100,
+                      height: 150,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
@@ -97,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<List<Album>> fetchFilms() async {
-    print("Fetching films...");
+    print('Fetching films...');
     const url = 'https://ghibliapi.vercel.app/films/';
     final uri = Uri.parse(url);
     final response = await http.get(uri);
