@@ -13,10 +13,10 @@
     "mongoose": "^7.5.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "body-parser": "^1.20.2"
+    "body-parser": "^1.20.2",
+    "express-rate-limit": "^8.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
   }
 }
-
